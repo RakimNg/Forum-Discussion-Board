@@ -4,7 +4,7 @@ import axiosInstance from '../axiosConfig';
 
 const TaskForm = ({ tasks, setTasks, editingTask, setEditingTask }) => {
   const { user } = useAuth();
-  const [formData, setFormData] = useState({ title: '', description: '', deadline: '' });
+  const [formData, setFormData] = useState({ title: '', description: '', deadline: '', tag: '' });
 
   useEffect(() => {
     if (editingTask) {
@@ -12,9 +12,10 @@ const TaskForm = ({ tasks, setTasks, editingTask, setEditingTask }) => {
         title: editingTask.title,
         description: editingTask.description,
         deadline: editingTask.deadline,
+        tag: editingTask.tag
       });
     } else {
-      setFormData({ title: '', description: '', deadline: '' });
+      setFormData({ title: '', description: '', deadline: '', tag: '' });
     }
   }, [editingTask]);
 
@@ -22,6 +23,7 @@ const TaskForm = ({ tasks, setTasks, editingTask, setEditingTask }) => {
     e.preventDefault();
     try {
       if (editingTask) {
+
         const response = await axiosInstance.put(`/api/tasks/${editingTask._id}`, formData, {
           headers: { Authorization: `Bearer ${user.token}` },
         });
@@ -33,18 +35,20 @@ const TaskForm = ({ tasks, setTasks, editingTask, setEditingTask }) => {
         setTasks([...tasks, response.data]);
       }
       setEditingTask(null);
-      setFormData({ title: '', description: '', deadline: '' });
+      setFormData({ title: '', description: '', deadline: '', tag: '' });
     } catch (error) {
+      console.log(user)
+      console.log(error)
       alert('Failed to save task.');
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded mb-6">
-      <h1 className="text-2xl font-bold mb-4">{editingTask ? 'Your Form Name: Edit Operation' : 'Your Form Name: Create Operation'}</h1>
+      <h1 className="text-2xl font-bold mb-4">{editingTask ? 'Edit Thread' : 'Create Thread'}</h1>
       <input
         type="text"
-        placeholder="Title"
+        placeholder="Thread Title"
         value={formData.title}
         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
         className="w-full mb-4 p-2 border rounded"
@@ -56,14 +60,14 @@ const TaskForm = ({ tasks, setTasks, editingTask, setEditingTask }) => {
         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
         className="w-full mb-4 p-2 border rounded"
       />
-      <input
+      {/* <input
         type="date"
         value={formData.deadline}
         onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
         className="w-full mb-4 p-2 border rounded"
-      />
+      /> */}
       <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">
-        {editingTask ? 'Update Button' : 'Create Button'}
+        {editingTask ? 'Update' : 'Create'}
       </button>
     </form>
   );
