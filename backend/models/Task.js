@@ -7,6 +7,7 @@ const taskSchema = new mongoose.Schema({
     description: { type: String },
     completed: { type: Boolean, default: false },
     deadline: { type: Date },
+    username: { type: String }
 });
 
 module.exports = mongoose.model('Task', taskSchema);
