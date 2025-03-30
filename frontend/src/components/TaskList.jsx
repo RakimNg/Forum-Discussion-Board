@@ -23,7 +23,7 @@ const TaskList = ({ tasks, setTasks, setEditingTask }) => {
           <div className="flex items-center space-x-3 mb-3">
             <div className="w-8 h-8 bg-gray-300 rounded-full"></div> {/* Placeholder for avatar */}
             <div>
-              <p className="text-sm font-semibold text-gray-800">{user.name}</p>
+              <p className="text-sm font-semibold text-gray-800">{task.username}</p>
               <p className="text-xs text-gray-500">{new Date().toLocaleDateString()}</p>
             </div>
           </div>

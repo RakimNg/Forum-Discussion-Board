@@ -1,9 +1,9 @@
-const Task = require('../models/Reply');
+const Reply = require('../models/Reply');
 const getReplies = async (
     req,
     res) => {
     try {
-        const tasks = await Reply.find({ userId: req.user.id });
+        const tasks = await Reply.find();
         res.json(tasks);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -13,9 +13,9 @@ const getReplies = async (
 const addReply = async (
     req,
     res) => {
-    const { content, date } = req.body;
+    const { content, date, username } = req.body;
     try {
-        const reply = await Reply.create({ userId: req.user.id });
+        const reply = await Reply.create({ userId: req.user.id, username: req.user.name, content, date });
         res.status(201).json(reply);
     } catch (error) {
         res.status(500).json({ message: error.message });
