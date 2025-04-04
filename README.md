@@ -8,6 +8,8 @@ cd SDLAPPS
 cd backend
 npm install
 
+##hello
+
 
 ##front end setup
 cd frontend
